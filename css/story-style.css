@@ -1,0 +1,182 @@
+/* =========================================
+   MALECA — Story page
+   ========================================= */
+:root {
+  --st-dark: #111;
+  --st-cream: #f3ece2;
+  --st-ink: #1c1a18;
+  --st-gold: #b79b72;
+  --st-serif: "Cormorant Garamond", "Playfair Display", Georgia, serif;
+  --st-sans: "Jost", "Helvetica Neue", Arial, sans-serif;
+}
+/* ---------- Header (story page) ---------- */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(17, 17, 17, 0.94);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(243, 236, 226, 0.14);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+}
+
+.header .logo,
+.header .nav a,
+.header .header-actions a,
+.header .menu-toggle {
+  color: var(--st-cream);
+}
+
+.header .nav a:hover,
+.header .header-actions a:hover {
+  color: var(--st-gold);
+}
+.nav a{font-size: 15px;}
+.header-actions a{font-size: 15px;}
+/* ---------- Sections ---------- */
+.story2 {
+  height: auto;
+  min-height: 0;
+  overflow: visible;
+  padding: clamp(3rem, 8vw, 7rem) clamp(1.25rem, 6vw, 5rem);
+  display: flex;
+  justify-content: center;
+}
+
+/* section 1: cream */
+.story.story2 {
+  background: var(--st-cream);
+  color: var(--st-ink);
+}
+
+/* section 2: dark */
+section.story2:not(.story) {
+  background: var(--st-dark);
+  color: var(--st-cream);
+}
+
+/* ---------- Two-column layout ---------- */
+.story2 .my-story {
+  width: 100%;
+  max-width: 1200px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: clamp(2rem, 6vw, 6rem);
+}
+
+.story2 .pic,
+.story2 .info {
+  width: 100%;
+  margin: 0;
+}
+
+/* ---------- Photo ---------- */
+.story2 .pic {
+  position: relative;
+}
+
+.story2 .picc {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  position: relative;
+  z-index: 1;
+}
+
+/* offset frame behind the photo */
+.story.story2 .pic::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translate(18px, 18px);
+  border: 1px solid var(--st-gold);
+  z-index: 0;
+}
+
+/* ---------- Text ---------- */
+.story2 .info p {
+  font-family: var(--st-sans);
+  font-weight: 300;
+  font-size: clamp(1rem, 0.9rem + 0.45vw, 1.2rem);
+  line-height: 1.95;
+  letter-spacing: 0.02em;
+  margin: 0;
+  max-width: 52ch;
+}
+
+/* small gold line above each paragraph */
+.story2 .info p::before {
+  content: "";
+  display: block;
+  width: 56px;
+  height: 1px;
+  background: var(--st-gold);
+  margin-bottom: 1.75rem;
+}
+
+/* drop cap on the first paragraph */
+.story.story2 .info p::first-letter {
+  font-family: var(--st-serif);
+  font-size: 4.2em;
+  font-weight: 500;
+  float: left;
+  line-height: 0.8;
+  padding: 0.08em 0.12em 0 0;
+  color: var(--st-gold);
+}
+
+/* ---------- Spider logo (section 2) ---------- */
+.story2 .pic .header-actions-svg {
+  display: block;
+  width: min(100%, 420px);
+  height: auto;
+  aspect-ratio: 1 / 1;
+  margin-inline: auto;
+  padding: clamp(1rem, 3vw, 2rem);
+  border: 1px solid rgba(243, 236, 226, 0.55);
+  border-radius: 50%;
+}
+
+/* ---------- Soft entrance ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  .story2 .pic,
+  .story2 .info {
+    animation: storyFade 0.9s ease both;
+  }
+  .story2 .info { animation-delay: 0.15s; }
+}
+
+@keyframes storyFade {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ---------- Tablet ---------- */
+@media (max-width: 900px) {
+  .story2 .my-story {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .story2 .pic,
+  .story2 .info p {
+    max-width: 520px;
+    margin-inline: auto;
+  }
+
+  .story2 .picc { aspect-ratio: 1 / 1; }
+}
+
+/* ---------- Phone ---------- */
+@media (max-width: 480px) {
+  .story2 { padding: 2.5rem 1.25rem; }
+
+  .story.story2 .pic::after { transform: translate(10px, 10px); }
+
+  .story2 .info p { line-height: 1.8; }
+
+  .story2 .pic .header-actions-svg { width: min(100%, 300px); }
+}

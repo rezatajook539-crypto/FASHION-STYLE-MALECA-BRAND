@@ -1,0 +1,212 @@
+/* ==========================================================
+   MALECA — product.css
+   بعد از style.css (و در نسخه‌ی فارسی بعد از style-fa.css) لود می‌شود
+   ========================================================== */
+
+/* ========== PRODUCTS PAGE ========== */
+.products-page {
+  background: var(--dark);
+  min-height: 100vh;
+  padding: calc(var(--header-h) + 24px) var(--pad) 64px;
+}
+
+/* ========== TOOLBAR (فشن / ادیتوریال) ========== */
+.toolbar {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  padding: 20px 0;
+  margin-bottom: 56px;
+  background: transparent;
+  border-block: 1px solid rgba(243, 236, 226, 0.28);
+}
+
+/* متن: بدون کادر، با یک خط کوتاه قبل از عنوان کوچک */
+.toolbar-ad {
+  flex: 1;
+  max-width: min(420px, calc(50% - 90px)); /* با لوگوی وسط هم‌پوشانی نکند */
+  padding: 0;
+  border: 0;
+}
+.toolbar-ad .eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 8px;
+  color: var(--text-muted);
+}
+.toolbar-ad .eyebrow::before {
+  content: "";
+  width: 32px;
+  height: 1px;
+  background: currentColor;
+}
+.toolbar-ad p:not(.eyebrow) {
+  margin: 0;
+  color: var(--text-light);
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(1.25rem, 2vw, 1.75rem);
+  line-height: 1.25;
+}
+
+/* لوگو: حلقه‌ی نازک وسط که خط‌های بالا و پایین را قطع می‌کند */
+.toolbar-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: clamp(96px, 10vw, 128px);
+  aspect-ratio: 1 / 1;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--dark);
+  color: var(--cream);
+  border: 1px solid rgba(243, 236, 226, 0.6);
+}
+.toolbar-icon svg { width: 66%; height: auto; }
+.toolbar-icon svg path { fill: currentColor; } /* رنگ لوگو از color می‌آید */
+
+/* ---- دکمه‌ی فیلتر ---- */
+.toolbar-filter-wrap { position: relative; }
+.toolbar-filter {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-width: 160px;
+  padding: 16px 28px;
+  background: transparent;
+  border: 1px solid rgba(243, 236, 226, 0.6);
+  color: var(--text-light);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s, border-color 0.3s;
+}
+.toolbar-filter::after { content: "+"; font-size: 1rem; line-height: 1; }
+.toolbar-filter[aria-expanded="true"]::after { content: "\2212"; }
+.toolbar-filter:hover,
+.toolbar-filter[aria-expanded="true"] {
+  background: var(--cream);
+  border-color: var(--cream);
+  color: var(--black);
+}
+
+/* ---- منوی بازشونده‌ی فیلتر (تیره، هماهنگ با سایت) ---- */
+.filter-panel {
+  position: absolute;
+  top: calc(100% + 8px);
+  inset-inline-end: 0;
+  min-width: 100%;
+  z-index: 20;
+  display: none;
+  flex-direction: column;
+  background: var(--dark);
+  border: 1px solid rgba(243, 236, 226, 0.6);
+}
+.filter-panel.open { display: flex; }
+.filter-option {
+  padding: 14px 18px;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid rgba(243, 236, 226, 0.15);
+  color: var(--text-light);
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-align: start;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s;
+}
+.filter-option:last-child { border-bottom: 0; }
+.filter-option:hover,
+.filter-option.active { background: var(--cream); color: var(--black); }
+
+/* ---- فارسی ---- */
+html[dir="rtl"] .toolbar-ad .eyebrow,
+html[dir="rtl"] .toolbar-filter,
+html[dir="rtl"] .filter-option { letter-spacing: 0; }
+html[dir="rtl"] .toolbar-ad p:not(.eyebrow) { font-style: normal; font-size: clamp(1.1rem, 2vw, 1.5rem); }
+html[dir="rtl"] .toolbar-filter,
+html[dir="rtl"] .filter-option { font-size: 0.85rem; }
+
+/* ---- ریسپانسیو ---- */
+@media (max-width: 760px) {
+  .toolbar { flex-direction: column; align-items: center; gap: 20px; padding: 24px 0; margin-bottom: 32px; }
+  .toolbar-icon { position: static; transform: none; order: -1; width: 96px; }
+  .toolbar-ad { max-width: none; width: 100%; text-align: center; }
+  .toolbar-ad .eyebrow { justify-content: center; }
+  .toolbar-filter-wrap,
+  .toolbar-filter { width: 100%; }
+}
+
+/* ========== CARDS ========== */
+.products-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+
+.p-card { background: var(--cream); border: 1px solid #2c2824; border-radius: 0.75rem; overflow: hidden; }
+.p-card-img { overflow: hidden; }
+.p-card-img img { aspect-ratio: 3 / 4; height: auto; transition: transform 0.5s ease; }
+.p-card:hover .p-card-img img { transform: scale(1.05); }
+
+.p-card-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border-top: 1px solid #2c2824;
+}
+.p-card-info h3 {
+  font-family: var(--sans);
+  font-weight: 400;
+  font-size: 0.65rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--black);
+}
+/* جدید: قبلاً قیمت h5 بود و هیچ استایلی نداشت */
+.p-card-price { margin-top: 4px; font-size: 0.75rem; color: #5a5047; }
+
+.p-card-btn {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  border: 1px solid var(--text-muted);
+  background: var(--dark);
+  color: var(--text-light);
+  transition: background 0.3s, color 0.3s;
+}
+.p-card-btn:hover { background: var(--text-light); color: var(--black); }
+
+/* حذف شد: قانون .header:hover با متغیر تعریف‌نشده‌ی --st-gold
+   (هم رنگ را خراب می‌کرد، هم hover لینک‌های هدر در style.css از قبل هست) */
+
+/* ========== RTL (نسخه‌ی فارسی) ========== */
+/* style-fa.css فقط کلاس‌های صفحه‌ی اصلی را بزرگ کرده؛ این‌ها مخصوص صفحه‌ی محصولاتند */
+html[dir="rtl"] .toolbar-ad p:not(.eyebrow) { font-size: 1.1rem; }
+html[dir="rtl"] .toolbar-filter { font-size: 0.85rem; }
+html[dir="rtl"] .filter-option { font-size: 0.85rem; }
+html[dir="rtl"] .p-card-info h3 { font-size: 0.85rem; font-weight: 500; }
+html[dir="rtl"] .p-card-price { font-size: 0.8rem; }
+html[dir="rtl"] .p-card-btn { transform: scaleX(-1); } /* فلش → در راست‌چین باید ← باشد */
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 1000px) {
+  .products-grid { grid-template-columns: repeat(2, 1fr); }
+  .toolbar-filter { width: 180px; }
+}
+
+@media (max-width: 600px) {
+  .toolbar { flex-direction: column; align-items: stretch; margin-bottom: 32px; }
+  .toolbar-ad { max-width: none; }
+  .toolbar-icon { position: static; transform: none; align-self: center; width: 96px; }
+  .toolbar-filter { width: 100%; }
+  .products-grid { grid-template-columns: 1fr; }
+}

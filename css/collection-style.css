@@ -1,0 +1,70 @@
+/* ========== COLLECTION ========== */
+/* برای هر دو زبان مشترک است؛ در dir="rtl" گرید و فلکس خودشان قرینه می‌شوند
+   --header-h از ابتدای style.css می‌آید (۱۱۳ پیکسل، در موبایل ۸۸) */
+
+.collection {
+  display: grid;
+  grid-template-columns: minmax(260px, 420px) auto;
+  justify-content: center;              /* متن و گالری کنار هم و وسط صفحه، نه چسبیده به دو لبه */
+  gap: clamp(40px, 6vw, 96px);
+  align-items: center;
+  min-height: calc(100vh - var(--header-h));
+  padding: 48px var(--pad);
+  background: var(--dark);
+  border-bottom: solid 0.5px var(--beige);
+  scroll-margin-top: var(--header-h);   /* با لینک‌های #collection زیر هدر ثابت نمی‌رود */
+}
+/* اولین کالکشن بالای صفحه است، پس جا برای هدر ثابت باز می‌کند
+   اگر بالای کالکشن اول بخش دیگری هست این بلوک را حذف کن */
+.collection:first-of-type {
+  min-height: 100vh;
+  padding-top: calc(var(--header-h) + 24px);
+}
+
+/* ---- متن ---- */
+.collection-text .eyebrow { font-size: 0.75rem; margin-bottom: 20px; }
+.collection-text h2 { font-size: clamp(2.4rem, 3.4vw, 3.4rem); margin-bottom: 24px; }
+.collection-text p:not(.eyebrow) { font-size: 1rem; line-height: 1.8; color: var(--text-muted); margin-bottom: 32px; max-width: 380px; }
+.collection-text .link { font-size: 0.8rem; }
+.nav a{font-size: 15px;}
+.header-actions a{font-size: 15px;}
+
+/* فارسی: فونت‌ها کمی بزرگ‌تر (جایگزین خط جدایی که قبلاً برای fa.css گفتم) */
+html[dir="rtl"] .collection-text .eyebrow { font-size: 0.95rem; }
+html[dir="rtl"] .collection-text p:not(.eyebrow) { font-size: 1.1rem; max-width: 400px; }
+html[dir="rtl"] .collection-text .link { font-size: 0.95rem; }
+
+/* ---- گالری ----
+   ارتفاع کل فقط از --gallery-h می‌آید و با ارتفاع صفحه تغییر می‌کند
+   نسبت عکس‌ها عمودی ۳ به ۴ است؛ برای نسبت دیگر، 3 / 4 و 0.75 را عوض کن */
+.collection-gallery {
+  --gallery-h: clamp(420px, calc(100vh - var(--header-h) - 96px), 680px);
+  --thumb-h: calc((var(--gallery-h) - 16px) / 3);
+  display: flex; gap: 8px; align-items: flex-start;
+}
+
+.collection-main { flex: none; height: var(--gallery-h); aspect-ratio: 3 / 4; overflow: hidden; border-radius: 0.5rem; }
+.collection-main img { transition: opacity 0.25s ease; }
+.collection-main img.fading { opacity: 0; }
+
+.collection-thumbs { flex: none; display: flex; flex-direction: column; gap: 8px; }
+.collection-thumb { flex: none; height: var(--thumb-h); width: calc(var(--thumb-h) * 0.75); padding: 0; border: 1px solid transparent; border-radius: 0.5rem; overflow: hidden; background: none; opacity: 0.7; transition: opacity 0.3s, border-color 0.3s; }
+.collection-thumb:hover { opacity: 1; border-color: var(--beige); }
+
+/* اگر خواستی کوچک‌ها سمت مخالف باشند، یکی از این دو را از کامنت دربیاور:
+html[dir="ltr"] .collection-thumbs { order: -1; }
+html[dir="rtl"] .collection-thumbs { order: -1; } */
+
+/* ---- تبلت و موبایل ---- */
+@media (max-width: 1000px) {
+  .collection { grid-template-columns: 1fr; justify-content: stretch; gap: 32px; min-height: 0; }
+  .collection:first-of-type { min-height: 0; }
+  .collection-text p:not(.eyebrow),
+  html[dir="rtl"] .collection-text p:not(.eyebrow) { max-width: none; }
+
+  /* عکس بزرگ بالا، سه عکس کوچک در یک ردیف زیرش */
+  .collection-gallery { flex-direction: column; width: 100%; max-width: 480px; margin-inline: auto; }
+  .collection-main { width: 100%; height: auto; }
+  .collection-thumbs { flex-direction: row; width: 100%; }
+  .collection-thumb { flex: 1; width: auto; height: auto; aspect-ratio: 3 / 4; }
+}

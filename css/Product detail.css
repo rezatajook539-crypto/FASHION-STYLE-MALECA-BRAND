@@ -1,0 +1,220 @@
+/* ==========================================================
+   MALECA — product-detail.css
+   یک فایل برای هر دو زبان (انگلیسی و فارسی) و همه‌ی اندازه‌ی صفحه‌ها
+   بعد از style.css (و در فارسی بعد از style-fa.css) و product.css لود شود.
+   از ویژگی‌های منطقی (inline-start/end) استفاده شده تا RTL خودکار درست شود.
+   ========================================================== */
+
+/* ---------- صفحه ---------- */
+.detail-page {
+  background: var(--dark, #121010);
+  min-height: 100vh;
+  /* هدر fixed است؛ این padding جلوی رفتن محتوا زیر هدر را می‌گیرد */
+  padding: calc(var(--header-h, 88px) + 24px) var(--pad, 20px) 64px;
+}
+
+.detail {
+  max-width: 1200px;
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: 1fr;          /* موبایل: تک‌ستونه */
+  gap: 28px;
+  align-items: start;
+  color: var(--text-light, #f3ece2);
+}
+
+/* ---------- گالری ---------- */
+.detail-gallery { min-width: 0; }
+
+.detail-main-img {
+  background: var(--cream, #f3ece2);
+  border: 1px solid #2c2824;
+  border-radius: 0.75rem;
+  overflow: hidden;
+}
+.detail-main-img img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  max-height: 75vh;                    /* روی موبایل عکس نصف صفحه را نبلعد */
+  object-fit: cover;
+  object-position: top center;
+}
+
+.detail-thumbs {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(64px, 72px));
+  gap: 10px;
+  margin-top: 12px;
+}
+.detail-thumb {
+  padding: 0;
+  background: none;
+  border: 1px solid #2c2824;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  cursor: pointer;
+}
+.detail-thumb:hover { border-color: var(--text-muted, #a89c8c); }
+.detail-thumb img { display: block; width: 100%; aspect-ratio: 3 / 4; object-fit: cover; }
+
+/* ---------- اطلاعات ---------- */
+.detail-info {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.detail-back {
+  align-self: flex-start;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-muted, #a89c8c);
+  transition: color 0.3s;
+}
+.detail-back:hover { color: var(--text-light, #f3ece2); }
+
+.detail-title {
+  margin: 0;
+  font-family: var(--serif, Georgia, serif);
+  font-weight: 400;
+  font-size: clamp(1.9rem, 6vw, 3rem);
+  line-height: 1.1;
+  overflow-wrap: anywhere;
+}
+.detail-price {
+  margin: 0;
+  font-family: var(--sans, system-ui, sans-serif);
+  font-size: 1.15rem;
+  letter-spacing: 0.08em;
+}
+.detail-desc {
+  margin: 0;
+  max-width: 60ch;
+  line-height: 1.8;
+  color: var(--text-muted, #a89c8c);
+}
+
+/* عنوان بخش‌ها: Size / Details / In this set */
+.detail-label,
+.detail-h2 {
+  margin: 12px 0 0;
+  font-family: var(--sans, system-ui, sans-serif);
+  font-weight: 400;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-muted, #a89c8c);
+}
+
+/* ---------- انتخاب سایز ---------- */
+.detail-sizes { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.detail-size {
+  min-width: 48px;
+  min-height: 48px;                    /* اندازه‌ی مناسب لمس */
+  padding: 0 16px;
+  background: transparent;
+  border: 1px solid var(--text-muted, #a89c8c);
+  color: var(--text-light, #f3ece2);
+  font: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s, border-color 0.3s;
+}
+.detail-size:hover { border-color: var(--text-light, #f3ece2); }
+.detail-size[aria-pressed="true"] {
+  background: var(--cream, #f3ece2);
+  border-color: var(--cream, #f3ece2);
+  color: var(--black, #121010);
+}
+
+/* ---------- دکمه‌ی افزودن به سبد ---------- */
+.detail-add {
+  min-height: 56px;
+  margin-top: 8px;
+  padding: 0 24px;
+  background: var(--cream, #f3ece2);
+  border: 1px solid var(--cream, #f3ece2);
+  color: var(--black, #121010);
+  font: inherit;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s;
+}
+.detail-add:hover { background: transparent; color: var(--text-light, #f3ece2); }
+.detail-add:disabled { opacity: 0.7; cursor: default; }
+
+.detail-msg {
+  min-height: 1.2em;                   /* با آمدن پیام، صفحه نپرد */
+  margin: 0;
+  font-size: 0.85rem;
+  color: #e0a36b;
+}
+
+/* ---------- مشخصات و آیتم‌های ست ---------- */
+.detail-specs {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0 24px;
+  margin: 0;
+  font-size: 0.95rem;
+}
+.detail-specs dt,
+.detail-specs dd { margin: 0; padding: 12px 0; border-bottom: 1px solid rgba(243, 236, 226, 0.12); }
+.detail-specs dt { color: var(--text-muted, #a89c8c); }
+
+.detail-set { margin: 0; padding: 0; list-style: none; }
+.detail-set li { padding: 12px 0; border-bottom: 1px solid rgba(243, 236, 226, 0.12); }
+
+/* ---------- محصول پیدا نشد ---------- */
+.detail-missing { grid-column: 1 / -1; padding: 80px 0; text-align: center; }
+.detail-missing p { margin: 12px 0 24px; color: var(--text-muted, #a89c8c); }
+.detail-missing .detail-back { align-self: center; }
+
+/* ---------- فوکوس کیبورد ---------- */
+.detail a:focus-visible,
+.detail button:focus-visible { outline: 2px solid var(--cream, #f3ece2); outline-offset: 3px; }
+
+/* ==========================================================
+   RTL (فارسی)
+   letter-spacing در حروف فارسی اتصال حروف را می‌شکند؛ پس صفر می‌شود
+   ========================================================== */
+html[dir="rtl"] .detail * { letter-spacing: 0; }
+html[dir="rtl"] .detail-back,
+html[dir="rtl"] .detail-label,
+html[dir="rtl"] .detail-h2 { font-size: 0.9rem; }
+html[dir="rtl"] .detail-size,
+html[dir="rtl"] .detail-add { font-size: 0.95rem; }
+html[dir="rtl"] .detail-desc { line-height: 2; }
+
+/* ==========================================================
+   RESPONSIVE
+   ========================================================== */
+/* تبلت و دسکتاپ: دو ستون، گالری هنگام اسکرول ثابت می‌ماند */
+@media (min-width: 801px) {
+  .detail { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 56px; }
+  .detail-gallery { position: sticky; top: calc(var(--header-h, 88px) + 24px); }
+  .detail-main-img img { max-height: 80vh; }
+}
+
+/* دسکتاپ بزرگ */
+@media (min-width: 1200px) {
+  .detail { gap: 80px; }
+}
+
+/* موبایل کوچک: دکمه‌ی افزودن تمام‌عرض و فاصله‌ها فشرده‌تر */
+@media (max-width: 480px) {
+  .detail { gap: 20px; }
+  .detail-specs { grid-template-columns: 1fr; }
+  .detail-specs dt { padding-bottom: 0; border-bottom: 0; }
+  .detail-specs dd { padding-top: 4px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .detail * { transition: none !important; }
+}
